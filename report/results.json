@@ -1,0 +1,664 @@
+{
+  "part1_types": {
+    "llm": "AIMessage",
+    "chain": "TextAccessor"
+  },
+  "part1_batch": [
+    [
+      "Посоветуй смартфон с хорошей камерой",
+      "русский",
+      "Смартфоны"
+    ],
+    [
+      "Ищу планшет для рисования",
+      "английский",
+      "Tablets"
+    ],
+    [
+      "Нужен холодильник No Frost",
+      "русский",
+      "Бытовая техника"
+    ],
+    [
+      "Gaming laptop under 1000 dollars",
+      "русский",
+      "Ноутбуки"
+    ]
+  ],
+  "part2_tests": [
+    [
+      "Найди ноутбуки дешевле 70000 рублей",
+      "{\"category\":\"laptop\",\"max_price\":70000,\"sort_by\":\"price_asc\"}",
+      "Категория и числовое ограничение",
+      "Верно"
+    ],
+    [
+      "Покажи самые дорогие смартфоны",
+      "{\"category\":\"smartphone\",\"max_price\":null,\"sort_by\":\"price_desc\"}",
+      "Сортировка по убыванию цены",
+      "Верно"
+    ],
+    [
+      "Хочу посмотреть планшеты",
+      "{\"category\":\"tablet\",\"max_price\":null,\"sort_by\":\"price_asc\"}",
+      "Отсутствие ограничения цены",
+      "Верно"
+    ],
+    [
+      "Покажи ноутбуки до 50 тысяч",
+      "{\"category\":\"laptop\",\"max_price\":50000,\"sort_by\":\"price_asc\"}",
+      "Нормализация числового выражения",
+      "Верно"
+    ],
+    [
+      "Найди холодильники",
+      "{\"category\":\"other\",\"max_price\":null,\"sort_by\":\"price_asc\"}",
+      "Неизвестная категория other",
+      "Верно"
+    ]
+  ],
+  "part2_ambiguous": [
+    [
+      "Подбери что-нибудь для учебы до 60к, лучше подороже",
+      "{\"category\":\"other\",\"max_price\":60000,\"sort_by\":\"price_desc\"}"
+    ],
+    [
+      "Нужен iPad или MacBook, бюджет полтинник",
+      "{\"category\":\"other\",\"max_price\":50000,\"sort_by\":\"price_asc\"}"
+    ]
+  ],
+  "part2_thinking": [
+    [
+      "Подбери что-нибудь для учебы до 60к, лучше подороже",
+      "off",
+      "{\"category\":\"other\",\"max_price\":60000,\"sort_by\":\"price_desc\"}",
+      "0.4",
+      35,
+      false,
+      0,
+      "Верно"
+    ],
+    [
+      "Подбери что-нибудь для учебы до 60к, лучше подороже",
+      "on",
+      "{\"category\":\"other\",\"max_price\":60000,\"sort_by\":\"price_desc\"}",
+      "1.3",
+      151,
+      false,
+      0,
+      "Верно"
+    ],
+    [
+      "Нужен iPad или MacBook, бюджет полтинник",
+      "off",
+      "{\"category\":\"other\",\"max_price\":50000,\"sort_by\":\"price_asc\"}",
+      "0.4",
+      35,
+      false,
+      0,
+      "Верно"
+    ],
+    [
+      "Нужен iPad или MacBook, бюджет полтинник",
+      "on",
+      "{\"category\":\"tablet\",\"max_price\":50000,\"sort_by\":\"price_asc\"}",
+      "12.3",
+      1185,
+      false,
+      0,
+      "Верно"
+    ]
+  ],
+  "part2_raw_fields": [
+    "content",
+    "role",
+    "reasoning_content",
+    "provider_specific_fields"
+  ],
+  "part3_table": [
+    [
+      "Найди ноутбуки дешевле 70000 рублей",
+      "laptop, 70000, price_asc",
+      "DEXP Atlas A15-I3W400 (44 299 ₽); Tecno Megabook K15SDA (55 299 ₽)",
+      "Верно"
+    ],
+    [
+      "Покажи самые дорогие смартфоны",
+      "smartphone, None, price_desc",
+      "Apple iPhone 17 (88 790 ₽); HONOR 600 (59 999 ₽); POCO X8 Pro Max (58 799 ₽); Samsung Galaxy A57 (41 999 ₽); Xiaomi REDMI Note 15 Pro (24 299 ₽)",
+      "Верно"
+    ],
+    [
+      "Хочу посмотреть планшеты",
+      "tablet, None, price_asc",
+      "HUAWEI MatePad SE 11 Wi-Fi (24 999 ₽); Xiaomi REDMI Pad 2 LTE (27 999 ₽); HONOR Pad X9a LTE (30 999 ₽); Apple iPad (11th Gen) (45 999 ₽)",
+      "Верно"
+    ],
+    [
+      "Покажи ноутбуки до 50 тысяч",
+      "laptop, 50000, price_asc",
+      "DEXP Atlas A15-I3W400 (44 299 ₽)",
+      "Верно"
+    ],
+    [
+      "Найди холодильники",
+      "other, None, price_asc",
+      "Категория не поддерживается: ищем только ноутбуки, смартфоны и планшеты.",
+      "Верно"
+    ],
+    [
+      "Смартфоны не дороже 30к",
+      "smartphone, 30000, price_asc",
+      "Xiaomi REDMI Note 15 Pro (24 299 ₽)",
+      "Верно"
+    ],
+    [
+      "Есть планшет тысяч за пятнадцать?",
+      "tablet, 15000, price_asc",
+      "—",
+      "Верно"
+    ],
+    [
+      "Самые дорогие ноутбуки до 1,5 млн",
+      "laptop, 1500000, price_desc",
+      "Apple MacBook Air M5 (143 999 ₽); MSI Katana 17 B13UCR-1491XRU (99 299 ₽); ASUS TUF Gaming FX707VJB-HX098 (97 299 ₽); HONOR MagicBook X16 AMD 2025 (70 299 ₽); Tecno Megabook K15SDA (55 299 ₽); DEXP Atlas A15-I3W400 (44 299 ₽)",
+      "Верно"
+    ],
+    [
+      "Какой-нибудь бюджетный телефон до десяти тысяч",
+      "smartphone, 10000, price_asc",
+      "—",
+      "Верно"
+    ],
+    [
+      "Покажи планшеты подороже, но не больше 100 тысяч",
+      "tablet, 100000, price_desc",
+      "Apple iPad (11th Gen) (45 999 ₽); HONOR Pad X9a LTE (30 999 ₽); Xiaomi REDMI Pad 2 LTE (27 999 ₽); HUAWEI MatePad SE 11 Wi-Fi (24 999 ₽)",
+      "Верно"
+    ],
+    [
+      "Нужны наушники до 40 тысяч",
+      "other, 40000, price_asc",
+      "Категория не поддерживается: ищем только ноутбуки, смартфоны и планшеты.",
+      "Верно"
+    ],
+    [
+      "Ноутбук за 30 тысяч есть?",
+      "laptop, 30000, price_asc",
+      "—",
+      "Верно"
+    ]
+  ],
+  "part3_no_db": [
+    [
+      "Какие ноутбуки дешевле 70000 рублей есть в каталоге?",
+      "У меня нет доступа к вашему текущему каталогу или базе данных товаров.\n\nПожалуйста, уточните:\n1. Название магазина или ссылку на каталог.\n2. Или пришлите список моделей с ценами, которые вы видите.\n\nТогда я смогу отфильтровать варианты дешевле 70 000 рублей.",
+      "DEXP Atlas A15-I3W400 (44 299 ₽); Tecno Megabook K15SDA (55 299 ₽)"
+    ],
+    [
+      "Какие самые дорогие смартфоны есть в каталоге?",
+      "У меня нет доступа к вашему текущему каталогу или базе данных магазина.\n\nПожалуйста, уточните:\n1. Название магазина или ссылку на каталог.\n2. Либо пришлите список моделей, которые вас интересуют.\n\nТогда я смогу помочь с выбором.",
+      "Apple iPhone 17 (88 790 ₽); HONOR 600 (59 999 ₽); POCO X8 Pro Max (58 799 ₽); Samsung Galaxy A57 (41 999 ₽); Xiaomi REDMI Note 15 Pro (24 299 ₽)"
+    ],
+    [
+      "Есть ли в каталоге планшеты до 15000 рублей?",
+      "Я не имею доступа к вашему текущему каталогу и актуальным ценам. Пожалуйста, проверьте раздел «Планшеты» на сайте и используйте фильтр по цене (до 15 000 ₽).",
+      "—"
+    ]
+  ],
+  "part3_tools": [
+    [
+      "Найди ноутбуки дешевле 70000 рублей",
+      "''",
+      "[{\"name\": \"search_products\", \"args\": {\"category\": \"laptop\", \"max_price\": 70000}}]",
+      "ok",
+      "DEXP Atlas A15-I3W400 (44 299 ₽); Tecno Megabook K15SDA (55 299 ₽)",
+      "Верно"
+    ],
+    [
+      "Покажи самые дорогие смартфоны",
+      "''",
+      "[{\"name\": \"search_products\", \"args\": {\"category\": \"smartphone\", \"sort_by\": \"price_desc\"}}]",
+      "ok",
+      "Apple iPhone 17 (88 790 ₽); HONOR 600 (59 999 ₽); POCO X8 Pro Max (58 799 ₽); Samsung Galaxy A57 (41 999 ₽); Xiaomi REDMI Note 15 Pro (24 299 ₽)",
+      "Верно"
+    ],
+    [
+      "Хочу посмотреть планшеты",
+      "''",
+      "[{\"name\": \"search_products\", \"args\": {\"category\": \"tablet\"}}]",
+      "ok",
+      "HUAWEI MatePad SE 11 Wi-Fi (24 999 ₽); Xiaomi REDMI Pad 2 LTE (27 999 ₽); HONOR Pad X9a LTE (30 999 ₽); Apple iPad (11th Gen) (45 999 ₽)",
+      "Верно"
+    ],
+    [
+      "Покажи ноутбуки до 50 тысяч",
+      "''",
+      "[{\"name\": \"search_products\", \"args\": {\"category\": \"laptop\", \"max_price\": 50000}}]",
+      "ok",
+      "DEXP Atlas A15-I3W400 (44 299 ₽)",
+      "Верно"
+    ],
+    [
+      "Найди холодильники",
+      "''",
+      "[{\"name\": \"search_products\", \"args\": {\"category\": \"other\"}}]",
+      "unsupported",
+      "Категория не поддерживается: ищем только ноутбуки, смартфоны и планшеты.",
+      "Верно"
+    ],
+    [
+      "Привет! Расскажи анекдот",
+      "'Привет! 😊\\n\\nВот один для тебя:\\n\\n— Доктор, я, кажется, стал не'",
+      "[]",
+      "no_tool_call",
+      "Модель не вызвала инструмент поиска.",
+      "Верно (ожидался ответ без вызова)"
+    ]
+  ],
+  "part4_errors": [
+    [
+      "Синтаксически некорректный JSON",
+      "{category: laptop, max_price: 70000}",
+      "OutputParserException",
+      "JSONDecodeError",
+      "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+    ],
+    [
+      "Текст вместо JSON",
+      "Конечно! Вот ноутбуки до 70000 ₽: Acer Aspire 3",
+      "OutputParserException",
+      "JSONDecodeError",
+      "Expecting value: line 1 column 1 (char 0)"
+    ],
+    [
+      "Значение вне перечисления",
+      "{\"category\": \"phone\", \"max_price\": 30000, \"sort_by\": \"price_asc\"}",
+      "OutputParserException",
+      "ValidationError",
+      "category   Input should be 'laptop', 'smartphone', 'tablet' or 'other' [type=literal_error, input_value='phone', input_t"
+    ],
+    [
+      "Неверный тип",
+      "{\"category\": \"laptop\", \"max_price\": \"дорого\", \"sort_by\": \"price_asc\"}",
+      "OutputParserException",
+      "ValidationError",
+      "max_price   Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='дорого"
+    ],
+    [
+      "Нарушение ограничения ge=0",
+      "{\"category\": \"laptop\", \"max_price\": -5, \"sort_by\": \"price_asc\"}",
+      "OutputParserException",
+      "ValidationError",
+      "max_price   Input should be greater than or equal to 0 [type=greater_than_equal, input_value=-5, input_type=int]"
+    ],
+    [
+      "Дробная цена",
+      "{\"category\": \"laptop\", \"max_price\": 49999.5, \"sort_by\": \"price_asc\"}",
+      "OutputParserException",
+      "ValidationError",
+      "max_price   Input should be a valid integer, got a number with a fractional part [type=int_from_float, input_value=49999"
+    ],
+    [
+      "Незакрытая скобка",
+      "{\"category\": \"laptop\", \"max_price\": 70000",
+      "нет ошибки → {\"category\":\"laptop\",\"max_price\":70000,\"sort_by\":\"price_asc\"}",
+      "—",
+      "—"
+    ],
+    [
+      "Число строкой",
+      "{\"category\": \"laptop\", \"max_price\": \"50000\"}",
+      "нет ошибки → {\"category\":\"laptop\",\"max_price\":50000,\"sort_by\":\"price_asc\"}",
+      "—",
+      "—"
+    ],
+    [
+      "JSON в markdown, 50000.0",
+      "```json\n{\"category\": \"laptop\", \"max_price\": 50000.0}\n```",
+      "нет ошибки → {\"category\":\"laptop\",\"max_price\":50000,\"sort_by\":\"price_asc\"}",
+      "—",
+      "—"
+    ]
+  ],
+  "part4_fake": {
+    "A. Без retry: плохой → хороший": {
+      "status": "error",
+      "attempts": 1,
+      "search_calls": 0,
+      "journal": "[  0.000s] request        query=\"Найди ноутбуки дешевле 70000 рублей\"\n[  0.000s] llm_call       attempt=1\n[  0.002s] parse_error    attempt=1 error=\"JSONDecodeError\" raw=\"Конечно! Вот что я нашел: {category: laptop}\"\n[  0.002s] failed         reason=\"parse_error\" attempts=1\n[  0.002s] result         status=\"error\" found=0"
+    },
+    "B. С retry: плохой → хороший": {
+      "status": "ok",
+      "attempts": 2,
+      "search_calls": 1,
+      "journal": "[  0.000s] request        query=\"Найди ноутбуки дешевле 70000 рублей\"\n[  0.000s] llm_call       attempt=1\n[  0.001s] parse_error    attempt=1 error=\"JSONDecodeError\" raw=\"Конечно! Вот что я нашел: {category: laptop}\"\n[  0.001s] llm_call       attempt=2\n[  0.002s] parse_ok       attempt=2 params={\"category\": \"laptop\", \"max_price\": 70000, \"sort_by\": \"price_asc\"}\n[  0.002s] validate_ok    category=\"laptop\"\n[  0.002s] search_start   params={\"category\": \"laptop\", \"max_price\": 70000, \"sort_by\": \"price_asc\"}\n[  0.002s] search_done    found=2\n[  0.002s] result         status=\"ok\" found=2"
+    },
+    "C. С retry: плохой ×3": {
+      "status": "error",
+      "attempts": 3,
+      "search_calls": 0,
+      "journal": "[  0.000s] request        query=\"Найди ноутбуки дешевле 70000 рублей\"\n[  0.000s] llm_call       attempt=1\n[  0.001s] parse_error    attempt=1 error=\"JSONDecodeError\" raw=\"Конечно! Вот что я нашел: {category: laptop}\"\n[  0.001s] llm_call       attempt=2\n[  0.002s] parse_error    attempt=2 error=\"JSONDecodeError\" raw=\"Конечно! Вот что я нашел: {category: laptop}\"\n[  0.002s] llm_call       attempt=3\n[  0.002s] parse_error    attempt=3 error=\"JSONDecodeError\" raw=\"Конечно! Вот что я нашел: {category: laptop}\"\n[  0.003s] failed         reason=\"parse_error\" attempts=3\n[  0.003s] result         status=\"error\" found=0"
+    }
+  },
+  "part5": {
+    "Диалог 1": [
+      [
+        1,
+        "Покажи ноутбуки до 80 тысяч",
+        "laptop, 80000, price_asc",
+        "laptop, 80000, price_asc",
+        "Верно",
+        739,
+        "laptop, 80000, price_asc",
+        "Верно",
+        707
+      ],
+      [
+        2,
+        "А сначала дорогие?",
+        "laptop, 80000, price_desc",
+        "laptop, 80000, price_desc",
+        "Верно",
+        748,
+        "laptop, 80000, price_desc",
+        "Верно",
+        746
+      ],
+      [
+        3,
+        "А что есть среди смартфонов?",
+        "smartphone, 80000, price_desc",
+        "smartphone, None, price_asc",
+        "Ошибка: max_price, sort_by",
+        751,
+        "smartphone, None, price_asc",
+        "Ошибка: max_price, sort_by",
+        788
+      ]
+    ],
+    "Диалог 2": [
+      [
+        1,
+        "Хочу посмотреть планшеты",
+        "tablet, None, price_asc",
+        "tablet, None, price_asc",
+        "Верно",
+        736,
+        "tablet, None, price_asc",
+        "Верно",
+        704
+      ],
+      [
+        2,
+        "Только не дороже 40 тысяч",
+        "tablet, 40000, price_asc",
+        "tablet, 40000, price_asc",
+        "Верно",
+        747,
+        "tablet, 40000, price_asc",
+        "Верно",
+        742
+      ],
+      [
+        3,
+        "А если ноутбуки, но до 70?",
+        "laptop, 70000, price_asc",
+        "laptop, 70000, price_asc",
+        "Верно",
+        754,
+        "laptop, 70000, price_asc",
+        "Верно",
+        787
+      ],
+      [
+        4,
+        "Покажи от дорогих к дешевым",
+        "laptop, 70000, price_desc",
+        "laptop, 70000, price_desc",
+        "Верно",
+        753,
+        "laptop, 70000, price_desc",
+        "Верно",
+        831
+      ]
+    ]
+  },
+  "part5_v2": {
+    "Диалог 1": [
+      [
+        1,
+        "Покажи ноутбуки до 80 тысяч",
+        "laptop, 80000, price_asc",
+        "laptop, 80000, price_asc",
+        "Верно",
+        "laptop, 80000, price_asc",
+        "Верно",
+        "laptop, 80000, price_asc",
+        "Верно",
+        "laptop, 80000, price_asc",
+        "Верно"
+      ],
+      [
+        2,
+        "А сначала дорогие?",
+        "laptop, 80000, price_desc",
+        "laptop, 80000, price_desc",
+        "Верно",
+        "laptop, 80000, price_desc",
+        "Верно",
+        "laptop, 80000, price_desc",
+        "Верно",
+        "laptop, 80000, price_desc",
+        "Верно"
+      ],
+      [
+        3,
+        "А что есть среди смартфонов?",
+        "smartphone, 80000, price_desc",
+        "smartphone, None, price_asc",
+        "Ошибка: max_price, sort_by",
+        "smartphone, None, price_asc",
+        "Ошибка: max_price, sort_by",
+        "smartphone, 80000, price_desc",
+        "Верно",
+        "smartphone, 80000, price_desc",
+        "Верно"
+      ]
+    ],
+    "Диалог 2": [
+      [
+        1,
+        "Хочу посмотреть планшеты",
+        "tablet, None, price_asc",
+        "tablet, None, price_asc",
+        "Верно",
+        "tablet, None, price_asc",
+        "Верно",
+        "tablet, None, price_asc",
+        "Верно",
+        "tablet, None, price_asc",
+        "Верно"
+      ],
+      [
+        2,
+        "Только не дороже 40 тысяч",
+        "tablet, 40000, price_asc",
+        "tablet, 40000, price_asc",
+        "Верно",
+        "tablet, 40000, price_asc",
+        "Верно",
+        "tablet, 40000, price_asc",
+        "Верно",
+        "tablet, 40000, price_asc",
+        "Верно"
+      ],
+      [
+        3,
+        "А если ноутбуки, но до 70?",
+        "laptop, 70000, price_asc",
+        "laptop, 70000, price_asc",
+        "Верно",
+        "laptop, 70000, price_asc",
+        "Верно",
+        "laptop, 70000, price_asc",
+        "Верно",
+        "laptop, 70000, price_asc",
+        "Верно"
+      ],
+      [
+        4,
+        "Покажи от дорогих к дешевым",
+        "laptop, 70000, price_desc",
+        "laptop, 70000, price_desc",
+        "Верно",
+        "laptop, 70000, price_desc",
+        "Верно",
+        "laptop, 70000, price_desc",
+        "Верно",
+        "laptop, 70000, price_desc",
+        "Верно"
+      ]
+    ],
+    "Диалог 3": [
+      [
+        1,
+        "Хочу смартфон подешевле, до 35 тысяч",
+        "smartphone, 35000, price_asc",
+        "smartphone, 35000, price_asc",
+        "Верно",
+        "smartphone, 35000, price_asc",
+        "Верно",
+        "smartphone, 35000, price_asc",
+        "Верно",
+        "smartphone, 35000, price_asc",
+        "Верно"
+      ],
+      [
+        2,
+        "А среди планшетов?",
+        "tablet, 35000, price_asc",
+        "tablet, 35000, price_asc",
+        "Верно",
+        "tablet, 35000, price_asc",
+        "Верно",
+        "tablet, 35000, price_asc",
+        "Верно",
+        "tablet, 35000, price_asc",
+        "Верно"
+      ],
+      [
+        3,
+        "Цена неважна",
+        "tablet, None, price_asc",
+        "tablet, None, price_asc",
+        "Верно",
+        "tablet, None, price_asc",
+        "Верно",
+        "tablet, None, price_asc",
+        "Верно",
+        "tablet, None, price_asc",
+        "Верно"
+      ],
+      [
+        4,
+        "Начнем заново: ноутбуки, сначала дорогие",
+        "laptop, None, price_desc",
+        "laptop, None, price_desc",
+        "Верно",
+        "laptop, None, price_desc",
+        "Верно",
+        "laptop, None, price_desc",
+        "Верно",
+        "laptop, None, price_desc",
+        "Верно"
+      ]
+    ]
+  },
+  "part5_v2_summary": [
+    [
+      "Диалог 1",
+      "v1",
+      "State",
+      "2/3",
+      "739 → 748 → 751"
+    ],
+    [
+      "Диалог 1",
+      "v1",
+      "History",
+      "2/3",
+      "707 → 746 → 788"
+    ],
+    [
+      "Диалог 1",
+      "v2",
+      "State",
+      "3/3",
+      "1063 → 1072 → 1075"
+    ],
+    [
+      "Диалог 1",
+      "v2",
+      "History",
+      "3/3",
+      "1031 → 1070 → 1112"
+    ],
+    [
+      "Диалог 2",
+      "v1",
+      "State",
+      "4/4",
+      "736 → 747 → 754 → 753"
+    ],
+    [
+      "Диалог 2",
+      "v1",
+      "History",
+      "4/4",
+      "704 → 742 → 787 → 831"
+    ],
+    [
+      "Диалог 2",
+      "v2",
+      "State",
+      "4/4",
+      "1060 → 1071 → 1078 → 1077"
+    ],
+    [
+      "Диалог 2",
+      "v2",
+      "History",
+      "4/4",
+      "1028 → 1066 → 1111 → 1155"
+    ],
+    [
+      "Диалог 3",
+      "v1",
+      "State",
+      "4/4",
+      "743 → 749 → 747 → 751"
+    ],
+    [
+      "Диалог 3",
+      "v1",
+      "History",
+      "4/4",
+      "711 → 751 → 789 → 831"
+    ],
+    [
+      "Диалог 3",
+      "v2",
+      "State",
+      "4/4",
+      "1067 → 1073 → 1071 → 1075"
+    ],
+    [
+      "Диалог 3",
+      "v2",
+      "History",
+      "4/4",
+      "1035 → 1075 → 1113 → 1155"
+    ]
+  ]
+}
